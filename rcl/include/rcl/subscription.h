@@ -445,6 +445,14 @@ rcl_subscription_get_publisher_count(
   const rcl_subscription_t * subscription,
   size_t * publisher_count);
 
+
+RCL_PUBLIC
+RCL_WARN_UNUSED
+rmw_ret_t
+rcl_subscription_get_unread_count(
+  const rcl_subscription_t * subscription,
+  size_t * unread_count);
+
 #ifdef __cplusplus
 }
 #endif

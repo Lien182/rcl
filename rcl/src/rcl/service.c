@@ -30,6 +30,8 @@ extern "C"
 #include "rmw/rmw.h"
 #include "rmw/validate_full_topic_name.h"
 
+#include "./common.h"
+
 typedef struct rcl_service_impl_t
 {
   rcl_service_options_t options;
@@ -334,6 +336,27 @@ rcl_service_is_valid(const rcl_service_t * service)
   RCL_CHECK_FOR_NULL_WITH_MSG(
     service->impl->rmw_handle, "service's rmw handle is invalid", return false);
   return true;
+}
+
+
+
+rmw_ret_t
+rcl_service_get_unread_requests(
+  const rcl_service_t * service,
+  size_t * unread_count)
+{
+  if (!rcl_service_is_valid(service)) {
+    return RCL_RET_SERVICE_INVALID;
+  }
+  RCL_CHECK_ARGUMENT_FOR_NULL(unread_count, RCL_RET_INVALID_ARGUMENT);
+  rmw_ret_t ret = rmw_service_count_unread_requests(service->impl->rmw_handle,
+      unread_count);
+
+  if (ret != RMW_RET_OK) {
+    RCL_SET_ERROR_MSG(rmw_get_error_string().str);
+    return rcl_convert_rmw_ret_to_rcl_ret(ret);
+  }
+  return RCL_RET_OK;
 }
 
 #ifdef __cplusplus

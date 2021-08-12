@@ -410,6 +410,15 @@ RCL_PUBLIC
 bool
 rcl_service_is_valid(const rcl_service_t * service);
 
+
+
+RCL_PUBLIC
+RCL_WARN_UNUSED
+rmw_ret_t
+rcl_service_get_unread_requests(
+  const rcl_service_t * service,
+  size_t * unread_count);
+
 #ifdef __cplusplus
 }
 #endif

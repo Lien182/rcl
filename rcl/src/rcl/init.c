@@ -29,6 +29,7 @@ extern "C"
 #include "rcutils/logging_macros.h"
 #include "rcutils/stdatomic_helper.h"
 #include "rmw/error_handling.h"
+#include "tracetools/tracetools.h"
 
 static atomic_uint_least64_t __rcl_next_unique_id = ATOMIC_VAR_INIT(1);
 
@@ -149,6 +150,8 @@ rcl_init(
     fail_ret = rcl_convert_rmw_ret_to_rcl_ret(rmw_ret);
     goto fail;
   }
+
+  TRACEPOINT(rcl_init, (const void *)context);
 
   return RCL_RET_OK;
 fail:

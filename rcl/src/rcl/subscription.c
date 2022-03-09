@@ -267,6 +267,8 @@ rcl_take(
   }
   RCUTILS_LOG_DEBUG_NAMED(
     ROS_PACKAGE_NAME, "Subscription take succeeded: %s", taken ? "true" : "false");
+  TRACEPOINT(rcl_take, (const void *)ros_message);
+
   if (!taken) {
     return RCL_RET_SUBSCRIPTION_TAKE_FAILED;
   }
